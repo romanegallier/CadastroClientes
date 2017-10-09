@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:inputText id="userMail" size="30" maxlength="30"
+                         value="#{clienteMbean.userMail}" />
+            
+        
+            <h:inputText id="userpwd" size="10" maxlength="10"
+                         value="#{clienteMbean.userpwd}" />
+            <h:commandButton id="submit" value="Enviar" action="logIn" />
+            <h4><h:outputText escape="false" value="#{clienteMbean.response}"/></h4>
+            <h:commandButton id="voltar" value="Go back" action="index" />
+        </h:form>
+    </h:body>
+</html>
+

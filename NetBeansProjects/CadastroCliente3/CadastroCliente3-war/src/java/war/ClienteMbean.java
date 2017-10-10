@@ -9,6 +9,7 @@ import ejb.ClienteFachada;
 import ejb.Clientes;
 import ejb.Commentaire;
 import ejb.Note;
+import ejb.NotePK;
 import ejb.Service;
 import ejb.TypeService;
 import java.io.Serializable;
@@ -47,6 +48,17 @@ public class ClienteMbean implements Serializable {
     String [] typosServicos;
     boolean log = false;
     String nome_type_service;
+    int valeur;
+
+   
+
+    public void setValeur(int valeur) {
+        this.valeur = valeur;
+    }
+    
+     public int getValeur() {
+        return valeur;
+    }
 
     public Service getServices() {
         return services;
@@ -198,22 +210,43 @@ public class ClienteMbean implements Serializable {
     
     
     
-    public void donnerNote(double note){
+    public String donnerNote(){
         //TODO faire que quand on clique on enregistre le services.
         //TODO verifier que cet utilisateur n'a pas deja laisser de note pour ce services
         if (services==null|| services.getIdS()==null){
+            System.out.println("war.ClienteMbean.donnerNote(): problemme avec le service");
             FacesMessage message = new FacesMessage( "service null" );
             FacesContext.getCurrentInstance().addMessage( null, message );
-            
+            return "note";
         }
         else {
             if (clientes==null||clientes.getId()==null){
+                System.out.println("war.ClienteMbean.donnerNote(): problemme client");
                 FacesMessage message = new FacesMessage( "clentes");
                 FacesContext.getCurrentInstance().addMessage( null, message );
+                return "note";
             }
             
             else {
-                clienteFachada.laisserNote(services.getIdS(), clientes.getId(), note);
+                System.out.println("war.ClienteMbean.donnerNote(): enregistrement note");
+                Note note = new Note(services.getIdS(),clientes.getId());
+                note.setValeur(valeur);
+                if (!clienteFachada.recupererNote(note)){
+                    try {
+                        clienteFachada.laisserNote(note);
+                        return "page_conecte";
+                    }
+                    catch (Exception e){
+                        FacesMessage message = new FacesMessage( "problemo gravanto a nota");
+                        FacesContext.getCurrentInstance().addMessage( null, message );
+                        return "note";
+                    }
+                }
+                else{  
+                   FacesMessage message = new FacesMessage( "voce ja dexa uma nota");
+                   FacesContext.getCurrentInstance().addMessage( null, message );
+                   return "note";     
+                }
             }
             
         }
@@ -225,19 +258,16 @@ public class ClienteMbean implements Serializable {
     }
     
     public String aller_page_note(Service service){
-         FacesContext context = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-        if (session != null){
-            clientes = (Clientes) session.getAttribute("clientes");
+        if (log){
             if (clientes== null){
-                return logIn();
+                return "logIn";
             }
             else {
             this.services=service;
             return "note";
             }
         }
-        else return "login";
+        else return "logIn";
     }
     
     public void laisserCommentaire (String commentaire){

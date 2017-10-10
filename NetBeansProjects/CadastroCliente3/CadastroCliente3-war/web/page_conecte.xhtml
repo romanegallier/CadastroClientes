@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui">  
     
     <h:head>
-        <title>Facelet Title</title>
+        <title>Connecte</title>
     </h:head>
     <h:body>
         Hello from Facelets
@@ -53,7 +53,7 @@
                    </p:column>
                     
                    <p:column headerText="Description">
-                       <h:commandButton id="note" value="note" action="inscription" />
+                       <h:commandButton id="note" value="note" action="#{clienteMbean.aller_page_note(service)}" />
                    </p:column>
                     
                   <p:column headerText="Description">

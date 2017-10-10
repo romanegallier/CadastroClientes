@@ -144,9 +144,7 @@ public class ClienteFachada {
         em.persist(commentaire);
     }
     
-    public void laisserNote(int id_services, int id_clientes,Double notes){
-        Note note = new Note(id_services, id_clientes);
-        note.setValeur(notes);
+    public void laisserNote(Note note){
         em.persist(note);
     }
     
@@ -154,6 +152,19 @@ public class ClienteFachada {
         Query query = em.createNamedQuery("Note.findByIdService");
         query.setParameter("idS", id_service);
         return query.getResultList();
+    }
+    
+    public boolean recupererNote(Note note){
+        Query query = em.createNamedQuery("Note.findByIdClientAndService");
+        query.setParameter("idClient", note.getClientes().getId());
+        query.setParameter("idService", note.getService().getIdS());
+        try {
+            query.getSingleResult();
+        }
+        catch (NoResultException r){
+            return false;
+        }
+        return true;
     }
     
     

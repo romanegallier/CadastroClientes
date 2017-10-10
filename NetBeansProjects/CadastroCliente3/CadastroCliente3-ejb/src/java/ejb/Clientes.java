@@ -37,11 +37,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Clientes.findByUf", query = "SELECT c FROM Clientes c WHERE c.uf = :uf")
     , @NamedQuery(name = "Clientes.findByTel", query = "SELECT c FROM Clientes c WHERE c.tel = :tel")
     , @NamedQuery(name = "Clientes.findByMail", query = "SELECT c FROM Clientes c WHERE c.mail = :mail")
+    , @NamedQuery(name = "Clientes.idmax", query = "SELECT c FROM Clientes c WHERE c.id = (SELECT MAX(c.id) FROM Clientes c)")
     , @NamedQuery(name = "Clientes.findByPwd", query = "SELECT c FROM Clientes c WHERE c.pwd = :pwd")})
 public class Clientes implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id 
     @Basic(optional = false)
     @NotNull(message = "rentre id" )
     @Column(name = "ID", nullable = false)

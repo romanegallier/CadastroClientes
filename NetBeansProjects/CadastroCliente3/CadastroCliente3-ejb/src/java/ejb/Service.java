@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Service.findByCidade", query = "SELECT s FROM Service s WHERE s.cidade = :cidade")
     , @NamedQuery(name = "Service.findByDescripcao", query = "SELECT s FROM Service s WHERE s.descripcao = :descripcao")
     , @NamedQuery(name = "Service.findByNome", query = "SELECT s FROM Service s WHERE s.nome = :nome")
+    , @NamedQuery(name = "Service.idmax", query = "SELECT s FROM Service s WHERE s.idS = (SELECT MAX(s.idS) FROM Service s)")
     , @NamedQuery(name = "Service.findByPrix", query = "SELECT s FROM Service s WHERE s.prix = :prix")})
 public class Service implements Serializable {
 

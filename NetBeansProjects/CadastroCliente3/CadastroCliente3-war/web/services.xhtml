@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>New Service</title>
     </h:head>
@@ -10,22 +11,50 @@
         <h:form>
          <fieldset>
          	<legend>Inscription</legend>
-	     	<h:outputLabel for="email">Adresse email <span class="requis">*</span></h:outputLabel>
-                <h:inputText id="email" value="#{clienteMbean.userMail}" required="true" size="20" maxlength="60" />
-	        <h:message id="emailMessage" for="email" errorClass="erreur" />
-	        <br />
-	
-	        <h:outputLabel for="motdepasse">Mot de passe <span class="requis">*</span></h:outputLabel>
-                <h:inputSecret id="motdepasse" value="#{clienteMbean.userpwd}" required="true" size="20" maxlength="20" />
-	        <h:message id="motDePasseMessage" for="motdepasse" errorClass="erreur" />
-	        <br />
-	
-	        <h:outputLabel for="confirmation">Confirmation du mot de passe <span class="requis">*</span></h:outputLabel>
-                <h:inputSecret id="confirmation" value="#{clienteMbean.userpwd}" required="true" size="20" maxlength="20" />
-	        <h:message id="confirmationMessage" for="confirmation" errorClass="erreur" />
-	        <br />
-	
+	     	
 	        
+                <!--type de service !-->
+                <h:outputLabel for="type_service">Type de service <span class="requis">*</span></h:outputLabel>
+                <h:inputText id="type_service" value="#{clienteMbean.services.typeService}" required="true" size="20" maxlength="60" />
+	        <h:message id="TypeMessage" for="typeService" errorClass="erreur" />
+	        <br />
+                
+                <h:selectOneMenu   id="userNumber"
+                                       required="true" 
+                                       value="#{clienteMbean.services.typeService}" >
+                    <f:selectItems value="#{clienteMbean.typosServicos}"/>
+                </h:selectOneMenu>
+	
+                <!--endereco!-->
+                <h:outputLabel for="endereco">Endereco <span class="requis">*</span></h:outputLabel>
+                <h:inputText id="endereco" value="#{clienteMbean.services.endereco}" required="true" size="20" maxlength="60" />
+	        <h:message id="enderecoMessage" for="endereco" errorClass="erreur" />
+	        <br />
+	
+                <!--cidade!-->
+                <h:outputLabel for="cidade">Cidade<span class="requis">*</span></h:outputLabel>
+                <h:inputText id="cidade" value="#{clienteMbean.services.cidade}" required="true" size="20" maxlength="60" />
+	        <h:message id="cidadeMessage" for="cidade" errorClass="erreur" />
+	        <br />
+	
+                <!--descriptaco!-->
+                <h:outputLabel for="descripcao">Descripcao <span class="requis">*</span></h:outputLabel>
+                <h:inputText id="descripcao" value="#{clienteMbean.services.descripcao}" required="true" size="20" maxlength="60" />
+	        <h:message id="descripcaoMessage" for="descripcao" errorClass="erreur" />
+	        <br />
+	
+                <!--nome!-->
+                <h:outputLabel for="nome">nome <span class="requis">*</span></h:outputLabel>
+                <h:inputText id="nome" value="#{clienteMbean.services.nome}" required="true" size="20" maxlength="60" />
+	        <h:message id="nomeMessage" for="nome" errorClass="erreur" />
+	        <br />
+	
+                <!--prix!-->
+	        <h:outputLabel for="prix">Preco <span class="requis">*</span></h:outputLabel>
+                <h:inputText id="prix" value="#{clienteMbean.services.prix}" required="true" size="20" maxlength="60" />
+	        <h:message id="prixMessage" for="prix" errorClass="erreur" />
+	        <br />
+	
 	        
 	        <h:messages globalOnly="true" infoClass="info" />
 	

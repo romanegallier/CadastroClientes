@@ -32,6 +32,11 @@ public class ClienteFachada {
         return query.getResultList();
     }
     
+    public List<TypeService> getListaTypoServico() {
+        Query query = em.createNamedQuery("TypeService.findAll");
+        return query.getResultList();
+    }
+    
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
@@ -48,8 +53,6 @@ public class ClienteFachada {
         } catch (NoResultException e) {
             return null;
         }
-        
-        
         if ( clientes.getPwd().equals(userpwd)) return clientes;
         //on sait pas si c'est un prestateur ou un utilisateur 
         else return null;
@@ -72,25 +75,23 @@ public class ClienteFachada {
     
             // Enregistrement d'un nouvel utilisateur
     public void ajouterUtilisateur( Clientes clientes ){
+        //TODO faire des verifications
         if (clientes.getCidade()==null){
             System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque ville");
-            clientes.setCidade("gre");
+            return;//TODO exeption
         }
         if (clientes.getEndereco()==null){
             System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque adresse");
-            clientes.setEndereco("gresse");
+            return;//TODO exeption
         }
-        if (        clientes.getId()==null){
+        if (clientes.getId()==null){
             System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque id");
-            //Query query = em.createQuery("SELECT MAX(ID) FROM CLIENTES");
-            
-            Query query = em.createQuery("select max(c.id) from Clientes c");
-            
-            // query.setParameter("mail", userMail);
+            Query query = em.createNamedQuery("Clientes.idmax");
             System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), query effectue");
-            int i =query.getFirstResult();
+            Clientes c2= (Clientes) query.getSingleResult();
+            int i= c2.getId();
             System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), acha "+i);
-            clientes.setId(i++);
+            clientes.setId(i+1);
         }
         if (clientes.getMail()==null){
             System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque mail");
@@ -104,28 +105,36 @@ public class ClienteFachada {
             System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque pwd");
             clientes.setPwd("patate");
         }
-        if (                                        clientes.getTel()==null){
+        if (clientes.getTel()==null){
             System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque tel");
-            clientes.setTel("5");
+            return ;
         }
-        if (                                                clientes.getUf()==null){
+        if (clientes.getUf()==null){
             System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque uf");
-            clientes.setUf("5");
+            return;
         }
         TypeService typeService =  new TypeService(1);
         clientes.setTypeService(typeService);
         
         persist(clientes);
+        clientes= null; //TODO enlever
     }
-    
-    
-    
     public void ajouterPrestateur(Clientes clientes) {
        em.persist(clientes);
     }
     
     public void ajouterServices(Service service){
-        em.persist(service);
+        if (!(service.getCidade()==null|| service.getDescripcao()==null||service.getEndereco()==null||
+                service.getNome()==null||service.getPrestateur()==null||service.getTypeService()==null)){
+            //TODO check that the prestateur is a clientes
+            Query query = em.createNamedQuery("Service.idmax");
+            
+            Service s= (Service) query.getSingleResult();
+            int i= s.getIdS();
+            System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), acha "+i);
+            service.setIdS(i+1);
+            em.persist(service);
+        }
     }
     
     public void laisserCommentaires(int id_services, int id_clientes, String commentaires){
@@ -157,8 +166,35 @@ public class ClienteFachada {
     }
     
     public List<Service> getListServices(){
-        Query query = em.createNamedQuery("Service.findAll");
-        return query.getResultList();
+        try {
+            Query query = em.createNamedQuery("Service.findAll");
+            return query.getResultList();
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public List<Service> getListServices(String localisation){
+        try {
+            Query query = em.createNamedQuery("Service.findByCidade");
+            query.setParameter("cidade",localisation);
+            return query.getResultList();
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+
+    public TypeService getTypeServiceByName(String nome_type_service){
+        try {
+            Query query = em.createNamedQuery("TypeService.findByNomeService");
+            query.setParameter("nomeService",nome_type_service);
+            return (TypeService) query.getSingleResult();
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 
 }

@@ -13,9 +13,10 @@
         
             <h:inputText id="userpwd" size="10" maxlength="10"
                          value="#{clienteMbean.userpwd}" />
-            <h:commandButton id="submit" value="Enviar" action="logIn" />
-            <h4><h:outputText escape="false" value="#{clienteMbean.response}"/></h4>
+            <h:commandButton id="submit" value="Enviar" action="#{clienteMbean.logIn()}" />
+            
             <h:commandButton id="voltar" value="Go back" action="index" />
+            <h:messages globalOnly="true" infoClass="info" />
         </h:form>
     </h:body>
 </html>

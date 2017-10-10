@@ -14,17 +14,13 @@
 	     	
 	        
                 <!--type de service !-->
-                <h:outputLabel for="type_service">Type de service <span class="requis">*</span></h:outputLabel>
-                <h:inputText id="type_service" value="#{clienteMbean.services.typeService}" required="true" size="20" maxlength="60" />
-	        <h:message id="TypeMessage" for="typeService" errorClass="erreur" />
-	        <br />
-                
-                <h:selectOneMenu   id="userNumber"
+                <h:selectOneMenu   id="type_service"
                                        required="true" 
-                                       value="#{clienteMbean.services.typeService}" >
+                                       value="#{clienteMbean.nome_type_service}" >
                     <f:selectItems value="#{clienteMbean.typosServicos}"/>
                 </h:selectOneMenu>
-	
+                <h:message id="TypeMessage" for="type_service" errorClass="erreur" />
+                <br />
                 <!--endereco!-->
                 <h:outputLabel for="endereco">Endereco <span class="requis">*</span></h:outputLabel>
                 <h:inputText id="endereco" value="#{clienteMbean.services.endereco}" required="true" size="20" maxlength="60" />

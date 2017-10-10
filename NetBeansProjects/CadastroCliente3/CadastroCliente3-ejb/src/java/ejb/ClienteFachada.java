@@ -131,9 +131,10 @@ public class ClienteFachada {
             
             Service s= (Service) query.getSingleResult();
             int i= s.getIdS();
-            System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), acha "+i);
+            System.out.println("ejb.ClienteFachada.ajouterService(), acha "+i);
             service.setIdS(i+1);
             em.persist(service);
+            System.out.println("ejb.ClienteFachada.ajouterServices(): success");
         }
     }
     

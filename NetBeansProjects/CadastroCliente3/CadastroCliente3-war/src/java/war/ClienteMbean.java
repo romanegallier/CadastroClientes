@@ -52,6 +52,17 @@ public class ClienteMbean implements Serializable {
         return services;
     }
 
+ 
+
+    public void setNome_type_service(String nome_type_service) {
+        System.out.println("war.ClienteMbean.setNome_type_service(): je modifie la valeur");
+        this.nome_type_service = nome_type_service;
+    }
+    
+    public String getNome_type_service() {
+        return nome_type_service;
+    }
+
     public void setServices(Service services) {
         this.services = services;
     }
@@ -164,12 +175,13 @@ public class ClienteMbean implements Serializable {
         if (services!=null){
             try {
                 services.setPrestateur(clientes);
+                System.out.println("war.ClienteMbean.inscrireService(): ajout prestateur");
                 TypeService t = clienteFachada.getTypeServiceByName(nome_type_service);
                 services.setTypeService(t);
                 clienteFachada.ajouterServices(services);
                 FacesMessage message = new FacesMessage( "Succès ajout du service:"+services.toString() );
                 FacesContext.getCurrentInstance().addMessage( null, message );
-                return "page_connecte";
+                return "page_conecte";
             }
             catch(Exception e){
                 FacesMessage message = new FacesMessage( "Succès ajout du service:"+services.toString() );

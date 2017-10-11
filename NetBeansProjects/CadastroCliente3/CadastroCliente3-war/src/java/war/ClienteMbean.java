@@ -231,7 +231,7 @@ public class ClienteMbean implements Serializable {
                 System.out.println("war.ClienteMbean.donnerNote(): enregistrement note");
                 Note note = new Note(services.getIdS(),clientes.getId());
                 note.setValeur(valeur);
-                if (!clienteFachada.recupererNote(note)){
+                if (!clienteFachada.recupererNote(services.getIdS(), clientes.getId())){
                     try {
                         clienteFachada.laisserNote(note);
                         return "page_conecte";

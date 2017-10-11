@@ -7,6 +7,7 @@ package ejb;
 
 import static ejb.Service_.idS;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
@@ -154,17 +155,33 @@ public class ClienteFachada {
         return query.getResultList();
     }
     
-    public boolean recupererNote(Note note){
-        Query query = em.createNamedQuery("Note.findByIdClientAndService");
-        query.setParameter("idClient", note.getClientes().getId());
-        query.setParameter("idService", note.getService().getIdS());
+    public boolean recupererNote(int id, int ids){
+        
+        
+        
+        if (ids<0){
+            System.out.println("ejb.ClienteFachada.recupererNote(): serviice id null");
+            return false;
+        }
+        
+        if (id<0){
+            System.out.println("ejb.ClienteFachada.recupererNote(): cliente");
+            return false;
+        }
+        Query query = em.createNamedQuery("Note.findByIdService");
+        query.setParameter("idService", ids);
         try {
-            query.getSingleResult();
+            List <Note> l = query.getResultList();
+            for (int i=0; i<l.size();i++){
+                if (id==l.get(i).getClientes().getId()){
+                    return true;
+                }
+            }
         }
         catch (NoResultException r){
             return false;
         }
-        return true;
+        return false;
     }
     
     

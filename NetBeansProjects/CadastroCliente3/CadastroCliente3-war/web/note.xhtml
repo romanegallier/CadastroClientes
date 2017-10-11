@@ -15,15 +15,13 @@
                 <h:inputText id="note" value="#{clienteMbean.valeur}" required="true" size="20" maxlength="60" />
 	        <h:message id="noteMessage" for="note" errorClass="erreur" />
 	        <br />
-                
-              
-            
-                
-                
                 <h:commandButton id="Valider" value="Valider" action="#{clienteMbean.donnerNote()}" />
 
         </h:form>
-        <h:commandButton id="voltar" value="Go back" action="index" />
+        <h:form>
+            <h:commandButton id="voltar" value="Go back" action="page_conecte" />
+        </h:form>
+        
     </h:body>
 </html>
 

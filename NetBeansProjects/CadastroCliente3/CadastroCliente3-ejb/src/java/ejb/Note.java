@@ -29,7 +29,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Note.findAll", query = "SELECT n FROM Note n")
     , @NamedQuery(name = "Note.findByIdService", query = "SELECT n FROM Note n WHERE n.notePK.idService = :idService")
     , @NamedQuery(name = "Note.findByIdClient", query = "SELECT n FROM Note n WHERE n.notePK.idClient = :idClient")
-    , @NamedQuery(name = "Note.findByIdClientAndService", query = "SELECT n FROM Note n WHERE n.notePK.idClient = :idClient AND n.notePK.idService= :idService")
     , @NamedQuery(name = "Note.findByValeur", query = "SELECT n FROM Note n WHERE n.valeur = :valeur")})
 public class Note implements Serializable {
 

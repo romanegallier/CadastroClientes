@@ -50,7 +50,13 @@ public class ClienteMbean implements Serializable {
     String nome_type_service;
     int valeur;
 
-   
+/**
+     * Creates a new instance of ClienteMbean
+     */
+    public ClienteMbean() {
+        clientes= new Clientes();
+        services= new Service();
+    }   
 
     public void setValeur(int valeur) {
         this.valeur = valeur;
@@ -64,19 +70,16 @@ public class ClienteMbean implements Serializable {
         return services;
     }
 
- 
+    public void setServices(Service services) {
+        this.services = services;
+    }
 
     public void setNome_type_service(String nome_type_service) {
-        System.out.println("war.ClienteMbean.setNome_type_service(): je modifie la valeur");
         this.nome_type_service = nome_type_service;
     }
     
     public String getNome_type_service() {
         return nome_type_service;
-    }
-
-    public void setServices(Service services) {
-        this.services = services;
     }
 
     public Note getNote() {
@@ -103,13 +106,7 @@ public class ClienteMbean implements Serializable {
         this.localisation = localisation;
     }
 
-    /**
-     * Creates a new instance of ClienteMbean
-     */
-    public ClienteMbean() {
-        clientes= new Clientes();
-        services= new Service();
-    }
+    
 
     public Clientes getClientes() {
         if (clientes== null){
@@ -122,8 +119,6 @@ public class ClienteMbean implements Serializable {
         this.clientes = clientes;
     }
 
-    
-
     public void setUserpwd(String userpwd) {
         this.userpwd = userpwd;
     }
@@ -131,38 +126,7 @@ public class ClienteMbean implements Serializable {
     public String getUserpwd() {
         return userpwd;
     }
-
     
-    
-    public List<Clientes> getListaClientes() {
-        return clienteFachada.getListaClientes(); 
-    }
-    
-    public String[]  getTyposServicos() {
-        List<TypeService> l = clienteFachada.getListaTypoServico(); 
-        typosServicos = new String[l.size()];
-        for (int i =0; i<l.size();i++){
-            typosServicos[i]=l.get(i).getNomeService();
-        }
-        return typosServicos;
-    }
-    
-    public List<Service> getListaService(){
-       if (localisation== null || localisation.isEmpty())
-            return clienteFachada.getListServices();
-       else {
-           return clienteFachada.getListServices(localisation);
-       }
-    }
-    
-    public List<Note> getListaNota(){
-       if (services!=null&& services.getIdS()!=null)
-            return clienteFachada.getListNota(services.getIdS());
-       else {
-          return null;
-       }
-    }
-
     public void setUserMail(String userMail) {
         this.userMail = userMail;
     }
@@ -170,8 +134,12 @@ public class ClienteMbean implements Serializable {
     public String getUserMail() {
         return userMail;
     }
+
     
-    
+    /*CLIENTE*/
+    public List<Clientes> getListaClientes() {
+        return clienteFachada.getListaClientes(); 
+    }
     
     public String inscrire(){
         
@@ -189,6 +157,58 @@ public class ClienteMbean implements Serializable {
         FacesContext.getCurrentInstance().addMessage( null, message );
         clientes=null;
         return "index";
+    }
+    
+     public String logIn(){
+        log= false;
+
+        if ((getUserMail()!= null) && (getUserpwd()!=null)) {
+            clientes=clienteFachada.logIn(getUserMail(),getUserpwd());
+            if (clientes!=null){
+                FacesContext ct = FacesContext.getCurrentInstance();
+                //HttpSession session = (HttpSession) ct.getExternalContext().getSession(true);
+                //session.setAttribute("clientes", clientes);
+                ct.addMessage(null, new FacesMessage("Logado com Sucesso !"));
+                log=true;
+                return "page_conecte";
+            }
+        }
+
+        if (log != true){
+            FacesContext ct = FacesContext.getCurrentInstance();
+            ct.addMessage(null, new FacesMessage("Usuário ou Senha inválidos"));
+            return "logIn";
+        }
+        return "page_conecte";
+    }
+     
+    public String deconection (){
+        log= false;
+        clientes= null;
+        return "index";
+    }
+    
+    
+    public String afficherClient(){
+        return "Bienvenue "+clientes.getNome();
+    }
+    /*TYPE SERVICE*/
+    public String[]  getTyposServicos() {
+        List<TypeService> l = clienteFachada.getListaTypoServico(); 
+        typosServicos = new String[l.size()];
+        for (int i =0; i<l.size();i++){
+            typosServicos[i]=l.get(i).getNomeService();
+        }
+        return typosServicos;
+    }
+    
+    /*SERVICE*/
+    public List<Service> getListaService(){
+       if (localisation== null || localisation.isEmpty())
+            return clienteFachada.getListServices();
+       else {
+           return clienteFachada.getListServices(localisation);
+       }
     }
     
     public String inscrireService(){
@@ -212,12 +232,15 @@ public class ClienteMbean implements Serializable {
         return "services";
     }
     
-    public void rechercher(){
-        
+    /*NOTE*/
+    public List<Note> getListaNota(){
+       if (services!=null&& services.getIdS()!=null)
+            return clienteFachada.getListNota(services.getIdS());
+       else {
+          return null;
+       }
     }
-    
-    
-    
+
     public String donnerNote(){
         //TODO faire que quand on clique on enregistre le services.
         //TODO verifier que cet utilisateur n'a pas deja laisser de note pour ce services
@@ -256,13 +279,7 @@ public class ClienteMbean implements Serializable {
                    return "note";     
                 }
             }
-            
-        }
-        
-        
-        
-        
-        
+        }  
     }
     
     public String aller_page_note(Service service){
@@ -277,7 +294,7 @@ public class ClienteMbean implements Serializable {
         }
         else return "logIn";
     }
-    
+     /*COMMENTAIRE */
     public void laisserCommentaire (String commentaire){
         //TODO faire que quand on clique on enregistre le services.
         //TODO verifier que cet utilisateur n'a pas deja laisser de note pour ce services
@@ -285,39 +302,8 @@ public class ClienteMbean implements Serializable {
     }
     
     
-           
-    public String logIn(){
-        log= false;
-
-        if ((getUserMail()!= null) && (getUserpwd()!=null)) {
-            clientes=clienteFachada.logIn(getUserMail(),getUserpwd());
-            if (clientes!=null){
-                FacesContext ct = FacesContext.getCurrentInstance();
-                //HttpSession session = (HttpSession) ct.getExternalContext().getSession(true);
-                //session.setAttribute("clientes", clientes);
-                ct.addMessage(null, new FacesMessage("Logado com Sucesso !"));
-                log=true;
-                return "page_conecte";
-            }
-        }
-
-        if (log != true){
-            FacesContext ct = FacesContext.getCurrentInstance();
-            ct.addMessage(null, new FacesMessage("Usuário ou Senha inválidos"));
-            return "logIn";
-        }
-        return "page_conecte";
-    }
-    
-    public String deconection (){
-        log= false;
-        clientes= null;
-        return "index";
-    }
-    
-    
-    public String afficherClient(){
-        return "Bienvenue "+clientes.getNome();
+    public void rechercher(){
+        
     }
     
     public String aller_page_details(Service service){
@@ -334,8 +320,4 @@ public class ClienteMbean implements Serializable {
         }
         return ""+clienteFachada.calculerMoyenne(this.services.getIdS());
     }
-    
-    
-            
-    
 }

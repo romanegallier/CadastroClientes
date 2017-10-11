@@ -14,18 +14,17 @@
                 <h:commandButton id="logIn" value="Log in" action="logIn" />
             </h:form>
             
+            <br />
              
             <h:form>
                 <h:commandButton id="signin" value="Sign in" action="inscription" />
             </h:form>
             
             <h:form>
-                <h1><h:outputText value="Lista de Clientes"/></h1>
+                <h1><h:outputText value="List of clients"/></h1>
                 <p:dataTable var="cliente" value="#{clienteMbean.listaClientes}">
-                   <p:column headerText="Id">
-                      <h:outputText value="#{cliente.id}" />
-                   </p:column>
-                   <p:column headerText="Nome">
+                   
+                   <p:column headerText="Name">
                       <h:outputText value="#{cliente.nome}" /> 
                    </p:column>
                    <p:column headerText="E-mail">
@@ -36,28 +35,27 @@
             
             
             <h:form>
+                <h2><h:outputText value="Look for a service"/></h2>
                 <h:inputText value="#{clienteMbean.localisation}" />
                 <h:commandButton id="rechercher" value="look" action="#{clienteMbean.rechercher()}" />
             </h:form>
             
             <h:form>
-                <h1><h:outputText value="Lista de Servico"/></h1>
+                <h1><h:outputText value="List of service"/></h1>
                 <p:dataTable var="service" value="#{clienteMbean.listaService}">
-                   <p:column headerText="idS">
-                      <h:outputText value="#{service.idS}" />
-                   </p:column>
-                   <p:column headerText="endereco">
+                   
+                   <p:column headerText="adress">
                       <h:outputText value="#{service.endereco}" /> 
                    </p:column>
-                   <p:column headerText="Cidade">
+                   <p:column headerText="town">
                       <h:outputText value="#{service.cidade}" />
                    </p:column>
                     
-                   <p:column headerText="Nome2">
+                   <p:column headerText="Name">
                       <h:outputText value="#{service.nome}" />
                    </p:column>
                     
-                   <p:column headerText="Prix">
+                   <p:column headerText="Cost">
                       <h:outputText value="#{service.prix}" />
                    </p:column>
                     
@@ -65,16 +63,16 @@
                       <h:outputText value="#{service.descripcao}" />
                    </p:column>
                     
-                   <p:column headerText="Description">
-                       <h:commandButton id="note" value="note" action="inscription" />
+                   <p:column headerText="Marks">
+                       <h:commandButton id="note" value="marks" action="logIn" />
                    </p:column>
                     
-                  <p:column headerText="Description">
-                      <h:commandButton id="commentaire" value="commentaire" action="inscription" />
+                  <p:column headerText="Commentary">
+                      <h:commandButton id="commentaire" value="commentary" action="logIn" />
                    </p:column>
                     
-                   <p:column headerText="Voir details">
-                       <h:commandButton id="detail" value="detail" action="#{clienteMbean.aller_page_details(service)}" />
+                   <p:column headerText="Details">
+                       <h:commandButton id="detail" value="details" action="#{clienteMbean.aller_page_details(service)}" />
                    </p:column>
         
                 </p:dataTable>

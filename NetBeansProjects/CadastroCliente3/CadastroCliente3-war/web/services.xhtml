@@ -7,13 +7,15 @@
         <title>New Service</title>
     </h:head>
     <h:body>
-        Proposer services
+        
         <h:form>
          <fieldset>
-         	<legend>Inscription</legend>
+         	<legend>Propose service</legend>
 	     	
 	        
                 <!--type de service !-->
+                <h:outputText value="Type of service"/>
+                <br />
                 <h:selectOneMenu   id="type_service"
                                        required="true" 
                                        value="#{clienteMbean.nome_type_service}" >
@@ -22,38 +24,43 @@
                 <h:message id="TypeMessage" for="type_service" errorClass="erreur" />
                 <br />
                 <!--endereco!-->
-                <h:outputLabel for="endereco">Endereco <span class="requis">*</span></h:outputLabel>
+                <h:outputLabel for="endereco">  Adress <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputText id="endereco" value="#{clienteMbean.services.endereco}" required="true" size="20" maxlength="60" />
 	        <h:message id="enderecoMessage" for="endereco" errorClass="erreur" />
 	        <br />
 	
                 <!--cidade!-->
-                <h:outputLabel for="cidade">Cidade<span class="requis">*</span></h:outputLabel>
+                <h:outputLabel for="cidade">Town <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputText id="cidade" value="#{clienteMbean.services.cidade}" required="true" size="20" maxlength="60" />
 	        <h:message id="cidadeMessage" for="cidade" errorClass="erreur" />
 	        <br />
 	
                 <!--descriptaco!-->
-                <h:outputLabel for="descripcao">Descripcao <span class="requis">*</span></h:outputLabel>
+                <h:outputLabel for="descripcao">Description <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputText id="descripcao" value="#{clienteMbean.services.descripcao}" required="true" size="20" maxlength="60" />
 	        <h:message id="descripcaoMessage" for="descripcao" errorClass="erreur" />
 	        <br />
 	
                 <!--nome!-->
-                <h:outputLabel for="nome">nome <span class="requis">*</span></h:outputLabel>
+                <h:outputLabel for="nome">Name <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputText id="nome" value="#{clienteMbean.services.nome}" required="true" size="20" maxlength="60" />
 	        <h:message id="nomeMessage" for="nome" errorClass="erreur" />
 	        <br />
 	
                 <!--prix!-->
-	        <h:outputLabel for="prix">Preco <span class="requis">*</span></h:outputLabel>
+	        <h:outputLabel for="prix">Price <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputText id="prix" value="#{clienteMbean.services.prix}" required="true" size="20" maxlength="60" />
 	        <h:message id="prixMessage" for="prix" errorClass="erreur" />
 	        <br />
 	
 	        
 	        <h:messages globalOnly="true" infoClass="info" />
-	
+                <br />
                 <h:commandButton value="Inscription" action="#{clienteMbean.inscrireService()}" styleClass="sansLabel" />
                 
 	        <br />
@@ -61,7 +68,7 @@
             
         </h:form>
         <h:form>
-            <h:commandButton id="retour" value="Retour a la page d'accueil" action="index" />
+            <h:commandButton id="retour" value="back" action="page_conecte" />
         </h:form>
         
     </h:body>

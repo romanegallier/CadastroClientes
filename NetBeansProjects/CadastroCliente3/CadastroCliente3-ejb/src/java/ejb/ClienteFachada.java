@@ -26,25 +26,18 @@ public class ClienteFachada {
     @PersistenceContext(unitName = "CadastroCliente3-ejbPU")
     private EntityManager em;
     
-
-     // Metodo que retorna a lista de clientes armazenada na tabela Clientes
+    public void persist(Object object) {
+        em.persist(object);
+    }
+    
+    
+    /***CLIENT*/
+    
     public List<ejb.Clientes> getListaClientes() {
         Query query = em.createNamedQuery("Clientes.findAll");
         return query.getResultList();
     }
     
-    public List<TypeService> getListaTypoServico() {
-        Query query = em.createNamedQuery("TypeService.findAll");
-        return query.getResultList();
-    }
-    
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
-    public void persist(Object object) {
-        em.persist(object);
-    }
-
     public Clientes logIn(String userMail, String userpwd) {
         Clientes clientes = null;
         Query query = em.createNamedQuery("Clientes.findByMail");
@@ -55,74 +48,45 @@ public class ClienteFachada {
             return null;
         }
         if ( clientes.getPwd().equals(userpwd)) return clientes;
-        //on sait pas si c'est un prestateur ou un utilisateur 
         else return null;
     }
     
-        // Recherche d'un utilisateur à partir de son adresse email pour le passage de parametre 
-    /*public Utilisateur trouver( String email ) throws DAOException {
-        Utilisateur utilisateur = null;
-        Query requete = em.createQuery( JPQL_SELECT_PAR_EMAIL );
-        requete.setParameter( PARAM_EMAIL, email );
-        try {
-            utilisateur = (Utilisateur) requete.getSingleResult();
-        } catch ( NoResultException e ) {
-            return null;
-        } catch ( Exception e ) {
-            throw new DAOException( e );
-        }
-        return utilisateur;
-    }*/
-    
-            // Enregistrement d'un nouvel utilisateur
     public void ajouterUtilisateur( Clientes clientes ){
-        //TODO faire des verifications
-        if (clientes.getCidade()==null){
-            System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque ville");
-            return;//TODO exeption
-        }
-        if (clientes.getEndereco()==null){
-            System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque adresse");
-            return;//TODO exeption
-        }
-        if (clientes.getId()==null){
-            System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque id");
-            Query query = em.createNamedQuery("Clientes.idmax");
-            System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), query effectue");
-            Clientes c2= (Clientes) query.getSingleResult();
-            int i= c2.getId();
-            System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), acha "+i);
-            clientes.setId(i+1);
-        }
-        if (clientes.getMail()==null){
-            System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque mail");
-            clientes.setMail("@gmail");
-        }
-        if (                        clientes.getNome()==null){
-            System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque nome");
-            clientes.setNome("patate");
-        }
-        if (                                clientes.getPwd()==null){
-            System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque pwd");
-            clientes.setPwd("patate");
-        }
-        if (clientes.getTel()==null){
-            System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque tel");
-            return ;
-        }
-        if (clientes.getUf()==null){
-            System.out.println("ejb.ClienteFachada.ajouterUtilisateur(), manque uf");
-            return;
-        }
+        Query query = em.createNamedQuery("Clientes.idmax");
+        Clientes c2= (Clientes) query.getSingleResult();
+        int i= c2.getId();
+        clientes.setId(i+1);
         TypeService typeService =  new TypeService(1);
         clientes.setTypeService(typeService);
-        
         persist(clientes);
-        clientes= null; //TODO enlever
+        clientes= null;
     }
-    public void ajouterPrestateur(Clientes clientes) {
-       em.persist(clientes);
+    
+    
+    /***SERIVCE*/
+    
+    
+    public List<Service> getListServices(){
+        try {
+            Query query = em.createNamedQuery("Service.findAll");
+            return query.getResultList();
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
+    
+    public List<Service> getListServices(String localisation){
+        try {
+            Query query = em.createNamedQuery("Service.findByCidade");
+            query.setParameter("cidade",localisation);
+            return query.getResultList();
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+
     
     public void ajouterServices(Service service){
         if (!(service.getCidade()==null|| service.getDescripcao()==null||service.getEndereco()==null||
@@ -138,13 +102,17 @@ public class ClienteFachada {
             System.out.println("ejb.ClienteFachada.ajouterServices(): success");
         }
     }
+
     
+    /*COMMENTAIRE*/
     public void laisserCommentaires(int id_services, int id_clientes, String commentaires){
         Commentaire commentaire = new Commentaire(id_services, id_clientes);
         commentaire.setCommentaire(commentaires);
         em.persist(commentaire);
     }
     
+    
+    /*NOTE*/
     public void laisserNote(Note note){
         em.persist(note);
     }
@@ -155,10 +123,19 @@ public class ClienteFachada {
         return query.getResultList();
     }
     
+    //TODO enlver doublon
+    public List<Note> getListNota(int idS) {
+        try {
+            Query query = em.createNamedQuery("Note.findByIdService");
+            query.setParameter("idService", idS);
+            return query.getResultList();
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+    
     public boolean recupererNote(int id, int ids){
-        
-        
-        
         if (ids<0){
             System.out.println("ejb.ClienteFachada.recupererNote(): serviice id null");
             return false;
@@ -199,38 +176,20 @@ public class ClienteFachada {
         }
     }
     
-    public List<Service> getListServices(){
-        try {
-            Query query = em.createNamedQuery("Service.findAll");
-            return query.getResultList();
-        }
-        catch (Exception e) {
-            return null;
-        }
-    }
     
-    public List<Note> getListNota(int idS) {
-        try {
-            Query query = em.createNamedQuery("Note.findByIdService");
-            query.setParameter("idService", idS);
-            return query.getResultList();
-        }
-        catch (Exception e) {
-            return null;
-        }
-    }
     
-    public List<Service> getListServices(String localisation){
-        try {
-            Query query = em.createNamedQuery("Service.findByCidade");
-            query.setParameter("cidade",localisation);
-            return query.getResultList();
-        }
-        catch (Exception e) {
-            return null;
-        }
-    }
+    
+    
+    
+    
 
+    /**TYPE SERVICE */
+    
+    public List<TypeService> getListaTypoServico() {
+        Query query = em.createNamedQuery("TypeService.findAll");
+        return query.getResultList();
+    }
+    
     public TypeService getTypeServiceByName(String nome_type_service){
         try {
             Query query = em.createNamedQuery("TypeService.findByNomeService");
@@ -241,7 +200,5 @@ public class ClienteFachada {
             return null;
         }
     }
-
-    
 
 }

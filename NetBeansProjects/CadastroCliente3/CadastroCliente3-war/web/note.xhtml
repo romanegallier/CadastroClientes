@@ -6,19 +6,25 @@
         <title>Note</title>
     </h:head>
     <h:body>
-        Entrez une note
+        <h5>Mark the service :</h5>
+        
+        <h:outputText value="#{clienteMbean.services.nome}"/>
+        <br />
+        <h5>Proposed by:</h5>
+        <h:outputText value="#{clienteMbean.services.prestateur.nome}"/>
+        <br />
+        <br />
         <h:form>
-        <legend>Note</legend>
-	     	
-                Afficher le service
-                <h:outputLabel for="note">Note <span class="requis">*</span></h:outputLabel>
-                <h:inputText id="note" value="#{clienteMbean.valeur}" required="true" size="20" maxlength="60" />
-	        <h:message id="noteMessage" for="note" errorClass="erreur" />
-	        <br />
-                <h:commandButton id="Valider" value="Valider" action="#{clienteMbean.donnerNote()}" />
-
+            <h:outputLabel for="note">Enter a mark <span class="requis">*</span></h:outputLabel>
+            <br />
+            <h:inputText id="note" value="#{clienteMbean.valeur}" required="true" size="20" maxlength="60" />
+            <h:message id="noteMessage" for="note" errorClass="erreur" />
+            <br />
+            <br />
+            <h:commandButton id="Valider" value="Valid" action="#{clienteMbean.donnerNote()}" />
         </h:form>
         <h:form>
+            <br />
             <h:commandButton id="voltar" value="Go back" action="page_conecte" />
         </h:form>
         

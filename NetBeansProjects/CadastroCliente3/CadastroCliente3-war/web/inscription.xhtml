@@ -9,47 +9,55 @@
       <h:form>
          <fieldset>
          	<legend>Inscription</legend>
-	     	<h:outputLabel for="email">Adresse email <span class="requis">*</span></h:outputLabel>
+                <h:outputLabel for="email">Adresse email <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputText id="email" value="#{clienteMbean.clientes.mail}" required="true" size="20" maxlength="60" />
 	        <h:message id="emailMessage" for="email" errorClass="erreur" />
 	        <br />
                 
                 
-	     	<h:outputLabel for="nome">Nome <span class="requis">*</span></h:outputLabel>
+	     	<h:outputLabel for="nome">Nome    <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputText id="nome" value="#{clienteMbean.clientes.nome}" required="true" size="20" maxlength="60" />
 	        <h:message id="nomeMessage" for="nome" errorClass="erreur" />
 	        <br />
                 
                 
-	     	<h:outputLabel for="cidade">Cidade <span class="requis">*</span></h:outputLabel>
+	     	<h:outputLabel for="cidade">Cidade   <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputText id="cidade" value="#{clienteMbean.clientes.cidade}" required="true" size="20" maxlength="60" />
 	        <h:message id="cidadeMessage" for="cidade" errorClass="erreur" />
 	        <br />
                 
                 
-	     	<h:outputLabel for="endereco">Endereco <span class="requis">*</span></h:outputLabel>
+	     	<h:outputLabel for="endereco">Endereco    <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputText id="endereco" value="#{clienteMbean.clientes.endereco}" required="true" size="20" maxlength="60" />
 	        <h:message id="enderecoMessage" for="endereco" errorClass="erreur" />
 	        <br />
                 
                 
 	     	<h:outputLabel for="tel">Telephone <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputText id="tel" value="#{clienteMbean.clientes.tel}" required="true" size="20" maxlength="60" />
 	        <h:message id="telMessage" for="tel" errorClass="erreur" />
 	        <br />
                 
                 
 	     	<h:outputLabel for="uf">Uf <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputText id="uf" value="#{clienteMbean.clientes.uf}" required="true" size="20" maxlength="60" />
 	        <h:message id="ufMessage" for="uf" errorClass="erreur" />
 	        <br />
 	
 	        <h:outputLabel for="motdepasse">Mot de passe <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputSecret id="motdepasse" value="#{clienteMbean.clientes.pwd}" required="true" size="20" maxlength="20" />
 	        <h:message id="motDePasseMessage" for="motdepasse" errorClass="erreur" />
 	        <br />
 	
 	        <h:outputLabel for="confirmation">Confirmation du mot de passe <span class="requis">*</span></h:outputLabel>
+                <br />
                 <h:inputSecret id="confirmation" value="#{clienteMbean.clientes.pwd}" required="true" size="20" maxlength="20" />
 	        <h:message id="confirmationMessage" for="confirmation" errorClass="erreur" />
 	        <br />
@@ -57,7 +65,7 @@
 	        
 	        
 	        <h:messages globalOnly="true" infoClass="info" />
-	
+                <br />
                 <h:commandButton value="Inscription" action="#{clienteMbean.inscrire()}" styleClass="sansLabel" />
 	        <br />
           </fieldset>

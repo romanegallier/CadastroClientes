@@ -7,16 +7,25 @@
     </h:head>
     <h:body>
         <h:form>
+            <h1><h:outputText value="Log In"/></h1>
+            <h3><h:outputText value="Mail"/></h3>
             <h:inputText id="userMail" size="30" maxlength="30"
                          value="#{clienteMbean.userMail}" />
-            
-        
-            <h:inputText id="userpwd" size="10" maxlength="10"
+            <br />
+            <h3><h:outputText value="Password"/></h3>
+            <h:inputSecret id="userpwd" size="10" maxlength="10"
                          value="#{clienteMbean.userpwd}" />
-            <h:commandButton id="submit" value="Enviar" action="#{clienteMbean.logIn()}" />
+            <br />
+            <br />
+            <h:commandButton id="submit" value="Send" action="#{clienteMbean.logIn()}" />
+            <br />
             
-            <h:commandButton id="voltar" value="Go back" action="index" />
+            
             <h:messages globalOnly="true" infoClass="info" />
+        </h:form>
+            <br />
+        <h:form>
+            <h:commandButton id="voltar" value="Go back" action="index" />
         </h:form>
     </h:body>
 </html>

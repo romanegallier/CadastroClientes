@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Details_service</title>
+    </h:head>
+    <h:body>
+        <h1><h:outputText value="#{clienteMbean.services.nome}"/></h1>
+        <p>
+            <h3><h:outputText value="Cidade:"/></h3>
+            <h:outputText value="#{clienteMbean.services.cidade}"/>
+        </p>
+        <p>
+            <h3><h:outputText value="Descripcao:"/></h3>
+            <h:outputText value="#{clienteMbean.services.descripcao}"/>
+        </p>
+        <p>
+            <h3><h:outputText value="endereco:"/></h3>
+            <h:outputText value="#{clienteMbean.services.endereco}"/>
+        </p>
+        <p>
+            <h3><h:outputText value="Preco:"/></h3>
+            <h:outputText value="#{clienteMbean.services.prix}"/>
+        </p>
+        <p>
+            <h3><h:outputText value="Typo de servicio:"/></h3>
+            <h:outputText value="#{clienteMbean.services.typeService.nomeService}"/>
+        </p>
+        
+        <p>
+            <h3><h:outputText value="Prestateur:"/></h3>
+            <h:outputText value="#{clienteMbean.services.prestateur.nome}"/>
+        </p>
+        
+        <p>
+            <h3><h:outputText value="Nota media:"/></h3>
+            <h:outputText value="#{clienteMbean.calculerMoyenne()}"/>
+        </p>
+        <h:form>
+                <h1><h:outputText value="Lista de notas"/></h1>
+                <p:dataTable var="note" value="#{clienteMbean.listaNota}">
+                   <p:column headerText="Valeur">
+                      <h:outputText value="#{note.valeur}" />
+                   </p:column>      
+       
+                </p:dataTable>
+        </h:form>
+                      
+    </h:body>
+</html>
+
+

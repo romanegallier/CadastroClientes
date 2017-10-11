@@ -154,6 +154,14 @@ public class ClienteMbean implements Serializable {
            return clienteFachada.getListServices(localisation);
        }
     }
+    
+    public List<Note> getListaNota(){
+       if (services!=null&& services.getIdS()!=null)
+            return clienteFachada.getListNota(services.getIdS());
+       else {
+          return null;
+       }
+    }
 
     public void setUserMail(String userMail) {
         this.userMail = userMail;
@@ -312,6 +320,22 @@ public class ClienteMbean implements Serializable {
         return "Bienvenue "+clientes.getNome();
     }
     
+    public String aller_page_details(Service service){
+        this.services=service;
+        if (service!=null)
+        return "details_service";
+        else 
+            return "";
+    }
     
+    public String calculerMoyenne(){
+        if (this.services==null || this.services.getIdS()== null){
+            return "-1";
+        }
+        return ""+clienteFachada.calculerMoyenne(this.services.getIdS());
+    }
+    
+    
+            
     
 }

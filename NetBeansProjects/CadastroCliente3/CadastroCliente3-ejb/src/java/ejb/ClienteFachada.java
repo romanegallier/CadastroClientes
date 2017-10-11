@@ -151,7 +151,7 @@ public class ClienteFachada {
     
     public List getListNote(int id_service){
         Query query = em.createNamedQuery("Note.findByIdService");
-        query.setParameter("idS", id_service);
+        query.setParameter("idService", id_service);
         return query.getResultList();
     }
     
@@ -188,15 +188,31 @@ public class ClienteFachada {
     public double calculerMoyenne(int id_service){
         double m=0.0;
         List<Note> l = getListNote(id_service);
-        for (int i=0;i<l.size();i++){
-            m+=l.get(i).getValeur();
+        if (l.isEmpty()){
+            return 0;
         }
-        return m/l.size();
+        else {
+            for (int i=0;i<l.size();i++){
+                m+=l.get(i).getValeur();
+            }
+            return m/l.size();
+        }
     }
     
     public List<Service> getListServices(){
         try {
             Query query = em.createNamedQuery("Service.findAll");
+            return query.getResultList();
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public List<Note> getListNota(int idS) {
+        try {
+            Query query = em.createNamedQuery("Note.findByIdService");
+            query.setParameter("idService", idS);
             return query.getResultList();
         }
         catch (Exception e) {
@@ -225,5 +241,7 @@ public class ClienteFachada {
             return null;
         }
     }
+
+    
 
 }
